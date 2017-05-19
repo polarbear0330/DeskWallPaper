@@ -3,7 +3,6 @@ Makefile*
 *.rc
 debug/*
 release/*
-*.pro*
 *.Release
 *.Debug
 *.autosave
