@@ -1,0 +1,12 @@
+Makefile
+Makefile*
+*.rc
+debug/*
+release/*
+*.pro*
+*.Release
+*.Debug
+*.autosave
+*.stash
+ui_*
+*.txt
