@@ -9,3 +9,4 @@ release/*
 *.stash
 ui_*
 *.txt
+*.user
