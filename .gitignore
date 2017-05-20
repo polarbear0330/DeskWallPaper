@@ -10,3 +10,9 @@ release/*
 ui_*
 *.txt
 *.user
+MyWallPaperFromBing
+*.o
+moc*
+
+
+

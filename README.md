@@ -28,6 +28,7 @@ update log:<br>
 1.找到ubantu桌面壁纸API，并将程序全部适配至Ubuntu（透明窗口变黑, Qt包含gnome的库）<br>
 找到了GNOME的GConfiClient，但无法包含对应的库<br>
 注：发现Ubuntu中的Wallpapers文件夹<br>
+注：ubuntu中ctrl+h显示隐藏的文件
 2.加入dll文件，便于直接启动exe
 
 ---------------------I am a separator line---------------------------<br>
