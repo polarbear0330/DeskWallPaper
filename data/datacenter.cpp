@@ -18,15 +18,16 @@ DataCenter &DataCenter::getInstance()
     return dc;
 }
 
+//#include<QDebug>
 QStringList DataCenter::getPicFilePaths(QString basePath)
 {
     QDir dir = QDir(basePath, "*.jpg", QDir::Name, QDir::Files);
     QStringList picFilePaths = dir.entryList();
     for(int i = 0; i < picFilePaths.count(); i++)
         picFilePaths[i] = basePath + picFilePaths[i];
+//    qDebug()<<picFilePaths;
     return picFilePaths;
 }
-
 QStringList DataCenter::getPicFilePaths()
 {
     return picFilePaths;

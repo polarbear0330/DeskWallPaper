@@ -12,7 +12,7 @@
 #include <QTimer>
 #include <QThread>
 #include <ctime>
-#if define(Q_OS_WIN)
+#if defined(Q_OS_WIN)
 #include <windows.h>
 #endif
 
@@ -56,7 +56,8 @@ private slots:
     void buttonReleased();
 
 private:
-    void setWallPaper_windows(QString filePath);
+//    void setWallPaper_windows(QString filePath);
+    void setWallPaper(QString filePath);
     void showStatusTips(STATUS status, QString errorString = "");
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);

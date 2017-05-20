@@ -244,7 +244,8 @@ void WallPaper::showStatusTips(STATUS status, QString errorString)
  * 输入本地图片文件的全路径
  * 调用windows系统函数SystemParametersInfo设置当前路径下的图片为桌面背景
  */
-void WallPaper::setWallPaper_windows(QString filePath)
+#if defined(Q_OS_WIN)
+void WallPaper::setWallPaper(QString filePath)
 {
     const char *tmp = filePath.toStdString().c_str(); //QDir::currentPath().append("/").append(currentFileName_).toStdString().c_str();
     std::wstringstream wss;
@@ -256,6 +257,16 @@ void WallPaper::setWallPaper_windows(QString filePath)
 //        emit message(FAILED_SET_WALLPAPER);
     }
 }
+
+#elif defined(Q_OS_LINUX)
+//#include"glib.h"
+//#include<gconf
+void WallPaper::setWallPaper(QString filePath)
+{
+
+    qDebug("ubuntu");
+}
+#endif
 
 /*
  * Getting "http://cn.bing.com/"
@@ -337,8 +348,10 @@ void WallPaper::savePic(QNetworkReply *reply)
             showStatusTips(LOAD_FROM_DATA_FAILED, QString("%1").arg(picData.size()));
             return;
         }
-        filePath = QDir::homePath() + "/Pictures/"
-                + QDateTime::currentDateTime().toString("yyyy-MM-dd") + "_Bing_txmy.jpg";
+        filePath = QDir::homePath() + "/" + "Pictures/";
+        QDir dir;
+        dir.mkdir(filePath);
+        filePath += QDateTime::currentDateTime().toString("yyyy-MM-dd") + "_Bing_txmy.jpg";
         qDebug()<<filePath;
         if(!picture.save(filePath))
         {
@@ -373,12 +386,13 @@ void WallPaper::on_setWallPaper_clicked()
 {
     DataCenter &dc = DataCenter::getInstance();
     filePath = dc.getPicFilePaths().at(dc.getCurrentIndex());
-#if defined(Q_OS_WIN)
-    setWallPaper_windows(filePath);
-    qDebug("win10");
-#elif defined(Q_OS_UNIX)
-    qDebug("ubuntu");
-#endif
+    setWallPaper(filePath);
+//#if defined(Q_OS_WIN)
+//    setWallPaper_windows(filePath);
+//    qDebug("win10");
+//#elif defined(Q_OS_LINUX)
+//    qDebug("ubuntu");
+//#endif
     close();
     todaysPic.close();
     next->close();
@@ -425,6 +439,7 @@ void WallPaper::buttonReleased()
     b->move(b->pos() - QPoint(3, 3));
     qApp->processEvents();
 }
+
 
 
 void WallPaper::mouseMoveEvent(QMouseEvent *event)
