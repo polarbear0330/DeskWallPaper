@@ -56,7 +56,7 @@ private slots:
     void buttonReleased();
 
 private:
-    void setWallPaper(QString filePath);
+    void setWallPaper_windows(QString filePath);
     void showStatusTips(STATUS status, QString errorString = "");
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
