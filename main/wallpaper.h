@@ -6,13 +6,15 @@
 #include "data/datacenter.h"
 
 #include <QDialog>
-#include <windows.h>
 #include <sstream>
 #include <QtNetwork>
 #include <QMouseEvent>
 #include <QTimer>
 #include <QThread>
 #include <ctime>
+#if define(Q_OS_WIN)
+#include <windows.h>
+#endif
 
 namespace Ui {
 class WallPaper;
