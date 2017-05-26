@@ -5,11 +5,12 @@
 */
 
 /*
- * 20170520更新日志：
+ * 20170526更新日志：
  * 1.跨平台：扩展至Ubuntu平台
- * 问题1：GNOME的GConfClient的库无法包含？①手动下载。②如何include本地任意库文件。③API函数测试 (FAIL)
- * 备选方案：函数内调用Ubuntu命令行与SHELL (BINGO)
- * 问题2：窗口背景色识别错误，两OS在此处不统一
+ * 方案一：GNOME的GConfClient的库与API：①手动下载。②如何include本地任意库文件。③API函数测试 (FAILED)
+ * 备选方案：Qt函数内，调用Ubuntu命令行(SHELL文件)，SHELL文件负责设置桌面背景功能，输入为filepath (BINGO)
+ * 2.窗口背景色识别错误，透明窗口变黑，两OS在此处不统一
+ * 3.加入dll文件，便于直接启动exe？
  *
  * --------------------I am a separating line----------------
  * 步骤：

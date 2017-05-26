@@ -2,12 +2,14 @@
 Get beautiful deskwall paper from cn.bing.com, and make it become yours!  
 Original picture size: 1920*1080 <br>
 OS supported: Windows 10, Ubuntu<br>
-Notice: On Ubuntu, the property of the file "setwallpaperforUbuntu" should be set as "can be executed"
+**Notice:** On Ubuntu, the property of the file "setwallpaperforUbuntu" should be set as "can be executed"
 
 ## Features:
 1. Pictures from Bing changes everyday, they will be downloaded and stored to local by the "DeskWallPaper" everytime when you start it.
 1. You can not only view and set today's wall-paper, but also view your history/local pictures and just choose one!
-1. If you do not want to take too much care of it, just start it when your PC start, since there is a "**Timer**" to close it after clicking the button by itself. TOTALLY **Automatically**!<br>**Tips: **Start when PC start:<br>For windows: put your .exe into the folder "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
+1. If you do not want to take too much care of it, just start it when your PC start, since there is a "**Timer**" to close it after clicking the button by itself. TOTALLY **Automatically**!<br>
+**Tips:**Start when PC start:<br>
+For windows: put your .exe into the folder "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 1. In fact, there is still 20 seconds left just in case that you forget it. The timer can be stoped by pressing any key! Such as "*Left*" and "*Right*" when toggling pictures. (When it finally come into your mind before closed.)
 
 ## Interface:
@@ -23,14 +25,14 @@ And these are my local pictures, since I develop those codes:<br>
 
 <br>
 update log:<br>
-20170520 update:<br>
-1.找到ubuntu桌面壁纸API，并将程序全部适配至Ubuntu（透明窗口变黑, Qt包含gnome的库）<br>
-找到了GNOME的GConfiClient，但无法包含对应的库<br>
-注：发现Ubuntu中的Wallpapers文件夹<br>
-注：ubuntu中ctrl+h显示隐藏的文件<br>
-2.加入dll文件，便于直接启动exe<br>
+20170526 update:<br>
+ * 1.跨平台：扩展至Ubuntu平台<br>
+ * 方案一：GNOME的GConfClient的库与API：①手动下载。②如何include本地任意库文件。③API函数测试 (FAIL)<br>
+ * 备选方案：Qt函数内，调用Ubuntu命令行(SHELL文件)，SHELL文件负责设置桌面背景功能，输入为filepath (BINGO)<br>
+ * 2.窗口背景色识别错误，透明窗口变黑，两OS在此处不统一<br>
+3.加入dll文件，便于直接启动exe？<br><br>
 
----------------------I am a separator line---------------------------<br>
+-----------------------------I am a separator line--------------------------------<br><br>
 update logs before my codes put on the Github:<br>
  * 步骤：
  * 1.图片的存储与读取_20161121
