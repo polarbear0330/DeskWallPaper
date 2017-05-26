@@ -7,8 +7,8 @@
 /*
  * 20170520更新日志：
  * 1.跨平台：扩展至Ubuntu平台
- * 问题：GNOME的GConfClient的库无法包含？①手动下载。②如何include本地任意库文件。③API函数测试
- * 备选方案：函数内调用Ubuntu命令行与SHELL
+ * 问题1：GNOME的GConfClient的库无法包含？①手动下载。②如何include本地任意库文件。③API函数测试 (FAIL)
+ * 备选方案：函数内调用Ubuntu命令行与SHELL (BINGO)
  * 问题2：窗口背景色识别错误，两OS在此处不统一
  *
  * --------------------I am a separating line----------------
@@ -266,11 +266,23 @@ void WallPaper::setWallPaper(QString filePath)
 }
 
 #elif defined(Q_OS_LINUX)
-//#include"glib.h"
-//#include<gconf
+#include <QProcess>
 void WallPaper::setWallPaper(QString filePath)
 {
+//    QString command;
+//    QFile file("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+//    file.open(QIODevice::ReadOnly);
+//    QByteArray text = file.readAll();
+//    file.close();
+//    command = text;
+//    qDebug()<<command;
 
+    QProcess *setWallPaperSHELL = new QProcess;
+    setWallPaperSHELL->start("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+//    qDebug()<<setWallPaperSHELL->execute("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+    qDebug()<<setWallPaperSHELL->errorString();
+//    system("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+//    system("opt/setwallpaperforUbuntu");
     qDebug("ubuntu");
 }
 #endif
