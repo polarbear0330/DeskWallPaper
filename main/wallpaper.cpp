@@ -137,15 +137,15 @@ WallPaper::WallPaper(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground);
 
     ui->label_backgr->setGeometry(this->geometry());
-    ui->label_backgr->setPixmap(QPixmap("pics/0.6.png"));
+    ui->label_backgr->setPixmap(QPixmap(qApp->applicationDirPath() + "/pics/0.6.png"));
 
     move((qApp->desktop()->width() - width()) / 2,
          (qApp->desktop()->height() - height()) / 2);
 
 //    todaysPic.TodaysPic(parent);
 
-    prev = new SwitchBtn("pics/prev.png", pos(), size(), true, parent);
-    next = new SwitchBtn("pics/next.png", pos(), size(), false, parent);
+    prev = new SwitchBtn(qApp->applicationDirPath() + "/pics/prev.png", pos(), size(), true, parent);
+    next = new SwitchBtn(qApp->applicationDirPath() + "/pics/next.png", pos(), size(), false, parent);
     prev->setTodaysPic(&todaysPic);
     next->setTodaysPic(&todaysPic);
 
@@ -270,18 +270,29 @@ void WallPaper::setWallPaper(QString filePath)
 #include <QProcess>
 void WallPaper::setWallPaper(QString filePath)
 {
-//    QString command;
-//    QFile file("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
-//    file.open(QIODevice::ReadOnly);
-//    QByteArray text = file.readAll();
-//    file.close();
-//    command = text;
-//    qDebug()<<command;
+//
+    QFile file(qApp->applicationDirPath() + "/setwallpaperforUbuntu");
+    file.open(QIODevice::ReadWrite);
+    QTextStream textStream(&file);
+    QString text = textStream.readAll();
+    int start = text.indexOf("/home");
+    textStream.seek(start);
+    textStream << filePath << "'                                                ";
+    file.close();
 
     QProcess *setWallPaperSHELL = new QProcess;
-    setWallPaperSHELL->start("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
-//    qDebug()<<setWallPaperSHELL->execute("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+    QString command = qApp->applicationDirPath() + "/setwallpaperforUbuntu";
+    qDebug()<< command;
+    setWallPaperSHELL->start(command);
     qDebug()<<setWallPaperSHELL->errorString();
+
+//    qDebug()<<setWallPaperSHELL->execute("saveDir=$HOME'/'");
+//    qDebug()<<setWallPaperSHELL->execute("picOpts=\"zoom\"");
+//    qDebug()<<setWallPaperSHELL->execute("picName=\"Fiddleheads_ZH-CN14463697077_1920x1200.jpg\"");
+//    qDebug()<<setWallPaperSHELL->execute("DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri '\"file://'$saveDir$picName'\"'");
+//    qDebug()<<setWallPaperSHELL->execute(" DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-options $picOpts");
+
+//    qDebug()<<setWallPaperSHELL->execute("./setwallpaperforUbuntu");
 //    system("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
 //    system("opt/setwallpaperforUbuntu");
     qDebug("ubuntu");
