@@ -13,6 +13,14 @@ SwitchBtn::SwitchBtn(QString icon_name, QPoint mainWidget_pos, QSize mainWidget_
 {
     ui->setupUi(this);
 
+    setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
+    setWindowOpacity(1.0);
+    setAttribute(Qt::WA_TranslucentBackground);
+
+    ui->pushButton->setWindowOpacity(0.5);
+    ui->pushButton->setAttribute(Qt::WA_TranslucentBackground);
+    ui->pushButton->setAttribute(Qt::WA_NoSystemBackground);
+
     if(isLeft)
         move(mainWidget_pos + QPoint(- width() - 50, (mainWidget_size.height() - height()) / 2));//
     else
@@ -21,10 +29,7 @@ SwitchBtn::SwitchBtn(QString icon_name, QPoint mainWidget_pos, QSize mainWidget_
     ui->pushButton->setIcon(QIcon(QPixmap(icon_name)));
     ui->pushButton->resize(this->size());
     ui->pushButton->setIconSize(ui->pushButton->size());
-    setWindowFlags(Qt::WindowStaysOnTopHint | Qt::FramelessWindowHint);
 
-    setWindowOpacity(1.0);
-    setAttribute(Qt::WA_TranslucentBackground);
 
     QList<QPushButton*> btnList = findChildren<QPushButton*>();
     for(auto button: btnList)
