@@ -139,16 +139,18 @@ WallPaper::WallPaper(QWidget *parent) :
     setWindowOpacity(1.0);
     setAttribute(Qt::WA_TranslucentBackground);
 
+    QString appDirPath = "";
+#if defined(Q_OS_LINUX)
+    appDirPath = qApp->applicationDirPath() + "/";
+#endif
     ui->label_backgr->setGeometry(this->geometry());
-    ui->label_backgr->setPixmap(QPixmap(qApp->applicationDirPath() + "/pics/0.6.png"));
+    ui->label_backgr->setPixmap(QPixmap(appDirPath + "pics/0.6.png"));
 
     move((qApp->desktop()->width() - width()) / 2,
          (qApp->desktop()->height() - height()) / 2);
 
-//    todaysPic.TodaysPic(parent);
-
-    prev = new SwitchBtn(qApp->applicationDirPath() + "/pics/prev.png", pos(), size(), true, parent);
-    next = new SwitchBtn(qApp->applicationDirPath() + "/pics/next.png", pos(), size(), false, parent);
+    prev = new SwitchBtn(appDirPath + "pics/prev.png", pos(), size(), true, parent);
+    next = new SwitchBtn(appDirPath + "pics/next.png", pos(), size(), false, parent);
     prev->setTodaysPic(&todaysPic);
     next->setTodaysPic(&todaysPic);
 
