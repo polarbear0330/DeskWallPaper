@@ -109,7 +109,7 @@ cn.bing.com</string>
     <string notr="true">color: rgb(203, 203, 203);</string>
    </property>
    <property name="text">
-    <string>2017-5-11更新</string>
+    <string>2017-5-30更新</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -5,11 +5,15 @@
 */
 
 /*
- * 20170520更新日志：
+ * 20170530更新日志：
+ * Ubuntu: 设置当前任意图片为桌面壁纸
+ *
+ * 20170526更新日志：
  * 1.跨平台：扩展至Ubuntu平台
- * 问题：GNOME的GConfClient的库无法包含？①手动下载。②如何include本地任意库文件。③API函数测试
- * 备选方案：函数内调用Ubuntu命令行与SHELL
- * 问题2：窗口背景色识别错误，两OS在此处不统一
+ * 方案一：GNOME的GConfClient的库与API：①手动下载。②如何include本地任意库文件。③API函数测试 (FAILED)
+ * 备选方案：Qt函数内，调用Ubuntu命令行(SHELL文件)，SHELL文件负责设置桌面背景功能，输入为filepath (BINGO)
+ * 2.窗口背景色识别错误，透明窗口变黑，两OS在此处不统一
+ * 3.加入dll文件，便于直接启动exe？
  *
  * --------------------I am a separating line----------------
  * 步骤：
@@ -136,15 +140,15 @@ WallPaper::WallPaper(QWidget *parent) :
     setAttribute(Qt::WA_TranslucentBackground);
 
     ui->label_backgr->setGeometry(this->geometry());
-    ui->label_backgr->setPixmap(QPixmap("pics/0.6.png"));
+    ui->label_backgr->setPixmap(QPixmap(qApp->applicationDirPath() + "/pics/0.6.png"));
 
     move((qApp->desktop()->width() - width()) / 2,
          (qApp->desktop()->height() - height()) / 2);
 
 //    todaysPic.TodaysPic(parent);
 
-    prev = new SwitchBtn("pics/prev.png", pos(), size(), true, parent);
-    next = new SwitchBtn("pics/next.png", pos(), size(), false, parent);
+    prev = new SwitchBtn(qApp->applicationDirPath() + "/pics/prev.png", pos(), size(), true, parent);
+    next = new SwitchBtn(qApp->applicationDirPath() + "/pics/next.png", pos(), size(), false, parent);
     prev->setTodaysPic(&todaysPic);
     next->setTodaysPic(&todaysPic);
 
@@ -266,11 +270,34 @@ void WallPaper::setWallPaper(QString filePath)
 }
 
 #elif defined(Q_OS_LINUX)
-//#include"glib.h"
-//#include<gconf
+#include <QProcess>
 void WallPaper::setWallPaper(QString filePath)
 {
+//
+    QFile file(qApp->applicationDirPath() + "/setwallpaperforUbuntu");
+    file.open(QIODevice::ReadWrite);
+    QTextStream textStream(&file);
+    QString text = textStream.readAll();
+    int start = text.indexOf("/home");
+    textStream.seek(start);
+    textStream << filePath << "'                                                ";
+    file.close();
 
+    QProcess *setWallPaperSHELL = new QProcess;
+    QString command = qApp->applicationDirPath() + "/setwallpaperforUbuntu";
+    qDebug()<< command;
+    setWallPaperSHELL->start(command);
+    qDebug()<<setWallPaperSHELL->errorString();
+
+//    qDebug()<<setWallPaperSHELL->execute("saveDir=$HOME'/'");
+//    qDebug()<<setWallPaperSHELL->execute("picOpts=\"zoom\"");
+//    qDebug()<<setWallPaperSHELL->execute("picName=\"Fiddleheads_ZH-CN14463697077_1920x1200.jpg\"");
+//    qDebug()<<setWallPaperSHELL->execute("DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri '\"file://'$saveDir$picName'\"'");
+//    qDebug()<<setWallPaperSHELL->execute(" DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-options $picOpts");
+
+//    qDebug()<<setWallPaperSHELL->execute("./setwallpaperforUbuntu");
+//    system("/home/yinhe/develop/DeskWallPaper/setwallpaperforUbuntu");
+//    system("opt/setwallpaperforUbuntu");
     qDebug("ubuntu");
 }
 #endif

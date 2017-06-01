@@ -1,0 +1,24 @@
+#!/bin/bash
+
+ # $HOME holds the path of the current user's home directory
+ # saveDir=$HOME'/'
+
+
+ # Set picture options
+ # Valid options are: none,wallpaper,centered,scaled,stretched,zoom,span ned
+ picOpts="zoom"
+
+
+ # File Path, the location where the Bing pics are stored
+ filePath='/home/yinhe/Pictures/2017-05-31_Bing_txmy.jpg'                                                                                                                                                                              
+
+
+ # Set the GNOME3 wallpaper
+ DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-uri '"file://'$filePath'"'
+
+ # Set the GNOME 3 wallpaper picture options
+ DISPLAY=:0 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.background picture-options $picOpts
+
+
+ # Exit the script
+ exit
